@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: simple-messenger
+    env: python
+    buildCommand: ""
+    startCommand: python simple_messenger.py
