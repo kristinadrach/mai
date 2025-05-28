@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your Chats</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+    }
+    form {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    input[type="text"] {
+      flex-grow: 1;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    input[type="submit"] {
+      background-color: #112831;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 8px 15px;
+      cursor: pointer;
+    }
+
+    .chat-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .chat-button {
+      background-color: #9cdfdf; /* Зелёный для чатов */
+      color: rgb(22, 22, 22);
+      border: none;
+      border-radius: 5px;
+      padding: 10px 15px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .logout-button {
+      background-color: #22110f; /* Красный для logout */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 15px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .logout-button:hover {
+      background-color: #d32f2f;
+    }
+  </style>
+</head>
+<body>
+  <h2>Your Chats</h2>
+
+  <form method="post">
+    <input type="text" name="other_user" placeholder="Enter username to chat with">
+    <input type="submit" value="Start Chat">
+  </form>
+
+  <div class="chat-list">
+    {% for chat in chats %}
+      <a href="/chat/{{ chat.chat_id }}" class="chat-button">{{ chat.username }}</a>
+    {% endfor %}
+  </div>
+
+  <a href="/logout" class="logout-button">Logout</a>
+</body>
+</html>

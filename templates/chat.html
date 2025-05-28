@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat with {{ other_user }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        a.back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #296855;
+            font-weight: bold;
+        }
+
+        #messages-container {
+            margin-bottom: 20px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+
+        .sent {
+            margin-left: auto;
+            background: #dcf8c6;
+            padding: 10px 15px;
+            border-radius: 18px 18px 0 18px;
+        }
+
+        .received {
+            margin-right: auto;
+            background: #f1f0f0;
+            padding: 10px 15px;
+            border-radius: 18px 18px 18px 0;
+        }
+
+        .message-time {
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        #message-form {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 15px;
+            box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+        }
+
+        #message-input {
+            width: 50%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        #send-button {
+            padding: 8px 16px;
+            background: #007aff;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <a href="{{ url_for('chats') }}" class="back-link">← Назад к чатам</a>
+
+    <h2>Chat with {{ other_user }}</h2>
+
+    <div id="messages-container">
+        {% for msg in messages %}
+        <div class="message {% if msg.is_current_user %}sent{% else %}received{% endif %}">
+            <div><strong>{{ msg.sender }}</strong></div>
+            <div>{{ msg.text }}</div>
+            <div class="message-time">{{ msg.time }}</div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <form id="message-form" method="post">
+        <input type="text" id="message-input" name="text" placeholder="Type a message..." required>
+        <button type="submit" id="send-button">Send</button>
+    </form>
+
+    <script>
+        // Автопрокрутка вниз
+        window.scrollTo(0, document.body.scrollHeight);
+        
+        // Фикс для формы ввода (чтобы не перекрывала последние сообщения)
+        const formHeight = document.getElementById('message-form').offsetHeight;
+        document.getElementById('messages-container').style.paddingBottom = formHeight + 20 + 'px';
+    </script>
+</body>
+</html>
